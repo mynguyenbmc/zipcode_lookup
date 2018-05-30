@@ -26,6 +26,7 @@ data PopulatedPlace = PopulatedPlace { zipCodePP :: String
                                   deriving (Eq, Show, Read, Ord)
 -}
 
+
 data Place where
   Place :: String -> String -> String -> Place
   LocatedPlace :: String -> String -> String -> Float -> Float -> Place
