@@ -19,4 +19,6 @@ data PopulatedPlace = PopulatedPlace { zipCodePP :: String
                                   , lonPP :: Float
                                   , populationPP :: Int }
                                   deriving (Eq, Show, Read, Ord)
-                                
+
+data GeneralPlace p where
+  newPlace :: p -> GeneralPlace p
