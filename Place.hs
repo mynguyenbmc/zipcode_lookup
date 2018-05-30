@@ -1,4 +1,8 @@
+{-# LANGUAGE GADTs, TypeInType, ScopedTypeVariables, StandaloneDeriving #-}
 module Place where
+
+import Prelude
+import Data.Kind
 
 data Place = Place { zipCodeP :: String
                     , townP :: String
@@ -21,4 +25,9 @@ data PopulatedPlace = PopulatedPlace { zipCodePP :: String
                                   deriving (Eq, Show, Read, Ord)
 
 data GeneralPlace p where
-  newPlace :: p -> GeneralPlace p
+  Nil :: GeneralPlace p
+  NewPlace :: p -> GeneralPlace p
+
+getPlace :: GeneralPlace p -> Maybe p
+getPlace Nil = Nothing
+getPlace (NewPlace p) = Just p

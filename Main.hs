@@ -13,12 +13,15 @@ sepBy d l@(x:xs)
    | otherwise = px : sepBy d sx
       where (px, sx) = break (== d) l
 
-getObject :: [ByteString] -> [Place]
-getObject [] = []
-getObject x : xs =  : getObject xs
+getObject :: [String] -> GeneraPlace p
+getObject [] = Nil
+getObject x:xs = 
+
+getObjects :: [ByteString] -> [GeneralPlace p]
+getObjects [] = []
+getObjects x : xs =  : getObjects xs
   where obj = sepBy ',' (unpack x)
 
 main = do
   csvData <- readFile "ziplocs.csv"
   let blines = lines csvData
-  
