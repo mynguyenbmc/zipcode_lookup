@@ -4,6 +4,7 @@ module Place where
 import Prelude
 import Data.Kind
 
+{-
 data Place = Place { zipCodeP :: String
                     , townP :: String
                     , stateP :: String }
@@ -23,11 +24,9 @@ data PopulatedPlace = PopulatedPlace { zipCodePP :: String
                                   , lonPP :: Float
                                   , populationPP :: Int }
                                   deriving (Eq, Show, Read, Ord)
+-}
 
-data GeneralPlace p where
-  Nil :: GeneralPlace p
-  NewPlace :: p -> GeneralPlace p
-
-getPlace :: GeneralPlace p -> Maybe p
-getPlace Nil = Nothing
-getPlace (NewPlace p) = Just p
+data Place where
+  Place :: String -> String -> String -> Place
+  LocatedPlace :: String -> String -> String -> Float -> Float -> Place
+  PopulatedPlace :: String -> String -> String -> Float -> Float -> Int -> Place

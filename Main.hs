@@ -2,9 +2,12 @@ module Main where
 import Class
 import Place
 import Data.Csv
-import qualified Data.ByteString.Lazy as BL
+--import qualified Data.ByteString.Lazy as BL
 import qualified Data.Vector as V
 import System.IO
+
+locationFile = "ziplocs.csv"
+populationFile = "uszipcodes.csv"
 
 sepBy :: Char -> String -> [String]
 sepBy _ [] = []
@@ -13,15 +16,25 @@ sepBy d l@(x:xs)
    | otherwise = px : sepBy d sx
       where (px, sx) = break (== d) l
 
-getObject :: [String] -> GeneraPlace p
-getObject [] = Nil
-getObject x:xs = 
 
-getObjects :: [ByteString] -> [GeneralPlace p]
+getPopulated :: [String] -> Maybe Place
+getPopulated [] = Nothing
+getPopulated l@(x:xs)
+  | length(l) <= 3 = Just $ Place zipcode town state
+  | otherwise = Just $ PopulatedPlace zipcode town state (-1.0) (-1.0) (read $ l !! 3 :: Int)
+  where zipcode = l !! 0
+        town = l !! 1
+        state = l !! 2
+
+
+getObjects :: [String] -> [Maybe Place]
 getObjects [] = []
-getObjects x : xs =  : getObjects xs
-  where obj = sepBy ',' (unpack x)
+getObjects (x : xs) = getPopulated obj : getObjects xs
+  where obj = sepBy ',' x
+
 
 main = do
-  csvData <- readFile "ziplocs.csv"
-  let blines = lines csvData
+  population <- readFile populationFile
+  let plines = tail $ lines population
+  let populationLines = getObjects plines
+  putStrLn population
