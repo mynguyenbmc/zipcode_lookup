@@ -4,7 +4,7 @@ module Place where
 import Prelude
 
 data Place where
-  Place :: String -> String -> String -> Place
-  LocatedPlace :: String -> String -> String -> Float -> Float -> Place
-  PopulatedPlace :: String -> String -> String -> Float -> Float -> Int -> Place
+  Place :: Int -> String -> String -> Place
+  LocatedPlace :: Int -> String -> String -> Float -> Float -> Place
+  PopulatedPlace :: Int -> String -> String -> Float -> Float -> Int -> Place
   deriving (Eq, Show, Read, Ord)
